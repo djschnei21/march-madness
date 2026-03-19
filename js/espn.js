@@ -200,13 +200,15 @@ export function getTeamResult(game, teamId) {
 
 function getRoundLabel(game) {
   // Try to determine round from game notes or date
+  // Check specific rounds before "Championship" since ESPN notes often include
+  // "NCAA Championship" in all rounds (e.g. "NCAA Championship - First Round")
   const note = game.competitions?.[0]?.notes?.[0]?.headline || '';
-  if (note.includes('Championship')) return 'Final';
-  if (note.includes('Semifinal') || note.includes('Final Four')) return 'FF';
-  if (note.includes('Elite')) return 'E8';
-  if (note.includes('Sweet')) return 'S16';
-  if (note.includes('Second') || note.includes('2nd')) return 'R32';
   if (note.includes('First') || note.includes('1st')) return 'R64';
+  if (note.includes('Second') || note.includes('2nd')) return 'R32';
+  if (note.includes('Sweet')) return 'S16';
+  if (note.includes('Elite')) return 'E8';
+  if (note.includes('Semifinal') || note.includes('Final Four')) return 'FF';
+  if (note.includes('Championship')) return 'Final';
   // Fallback by date
   const date = game.date?.slice(0, 10)?.replace(/-/g, '') || '';
   if (date <= '20260320') return 'R64';

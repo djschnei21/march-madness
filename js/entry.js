@@ -103,7 +103,7 @@ function markDirty() {
   const wasDirty = entryDirty;
   entryDirty = true;
   // Re-render share section so stale state takes effect
-  if (!wasDirty) renderShare();
+  if (!wasDirty) renderEntryManagement();
 }
 
 export function onChange(cb) {
@@ -246,12 +246,19 @@ export function importOpponentFromCode(code, name) {
     throw new Error('Invalid entry code');
   }
   const opponents = getOpponents();
-  opponents.push({
-    id: 'opp_' + Date.now(),
-    name: name.trim(),
-    entry: parsed,
-    savedAt: Date.now(),
-  });
+  const trimmed = name.trim();
+  const existing = opponents.find(o => o.name.toLowerCase() === trimmed.toLowerCase());
+  if (existing) {
+    existing.entry = parsed;
+    existing.savedAt = Date.now();
+  } else {
+    opponents.push({
+      id: 'opp_' + Date.now(),
+      name: trimmed,
+      entry: parsed,
+      savedAt: Date.now(),
+    });
+  }
   localStorage.setItem(OPPONENTS_KEY, JSON.stringify(opponents));
 }
 
@@ -284,7 +291,7 @@ export function renderEntryCard() {
   renderFinalFourPicks();
   renderTiebreaker();
   renderSaveButton();
-  renderShare();
+  renderEntryManagement();
 
   if (viewOnly) {
     const container = document.getElementById('entry');
@@ -618,7 +625,7 @@ function renderSaveButton() {
     setTimeout(() => { feedback.innerHTML = ''; }, 2000);
 
     // Re-render share with animation
-    renderShare({ animate: true });
+    renderEntryManagement({ animate: true });
     renderSaveButton();
   });
 
@@ -633,90 +640,114 @@ function renderSaveButton() {
   });
 }
 
-function renderShare({ animate = false } = {}) {
-  const container = document.getElementById('entry-share');
-  if (viewOnly) {
-    container.innerHTML = '';
-    return;
-  }
+function renderEntryManagement({ animate = false } = {}) {
+  const container = document.getElementById('entry-management');
+  const opponents = getOpponents();
+  let html = '';
 
-  let codeSection;
-  if (isEntryComplete()) {
-    const code = getEntryCode();
-    const isStale = entryDirty;
-    lastSavedCode = isStale ? lastSavedCode : code;
+  // --- My Entry card (hidden in viewOnly) ---
+  if (!viewOnly) {
+    const complete = isEntryComplete();
+    const statusClass = complete ? 'status-alive' : 'status-playing';
+    const statusLabel = complete ? 'Complete' : 'Incomplete';
 
-    if (animate) {
-      // Show generating animation, then reveal code
-      codeSection = `
-        <p class="muted" style="margin-bottom:8px">Your entry code:</p>
-        <textarea class="share-code code-generating" readonly rows="3" id="entry-code-output"></textarea>
-        <button class="btn" id="copy-code" disabled>Copy Code</button>
-      `;
-    } else if (isStale) {
-      codeSection = `
-        <p class="muted" style="margin-bottom:8px">Your entry code:</p>
-        <div class="share-code stale" id="entry-code-output">${lastSavedCode ? '••••••••' : ''}</div>
-        <p class="stale-text" id="share-stale-msg">Entry has changed — save to generate a new code</p>
-        <button class="btn btn-disabled" id="copy-code" disabled title="Save your entry first to get a fresh code">Copy Code</button>
-      `;
+    let codeHtml;
+    if (complete) {
+      const code = getEntryCode();
+      const isStale = entryDirty;
+      lastSavedCode = isStale ? lastSavedCode : code;
+
+      if (animate) {
+        codeHtml = `
+          <p class="muted" style="margin-bottom:8px">Your entry code:</p>
+          <textarea class="share-code code-generating" readonly rows="3" id="entry-code-output"></textarea>
+          <button class="btn" id="copy-code" disabled>Copy Code</button>
+        `;
+      } else if (isStale) {
+        codeHtml = `
+          <p class="muted" style="margin-bottom:8px">Your entry code:</p>
+          <div class="share-code stale" id="entry-code-output">${lastSavedCode ? '••••••••' : ''}</div>
+          <p class="stale-text" id="share-stale-msg">Entry has changed — save to generate a new code</p>
+          <button class="btn btn-disabled" id="copy-code" disabled title="Save your entry first to get a fresh code">Copy Code</button>
+        `;
+      } else {
+        codeHtml = `
+          <p class="muted" style="margin-bottom:8px">Your entry code:</p>
+          <textarea class="share-code" readonly rows="3" id="entry-code-output">${code}</textarea>
+          <button class="btn" id="copy-code">Copy Code</button>
+        `;
+      }
     } else {
-      codeSection = `
-        <p class="muted" style="margin-bottom:8px">Your entry code:</p>
-        <textarea class="share-code" readonly rows="3" id="entry-code-output">${code}</textarea>
-        <button class="btn" id="copy-code">Copy Code</button>
+      lastSavedCode = null;
+      const missing = getMissingFields();
+      codeHtml = `
+        <p class="muted" style="margin-bottom:8px">Complete your entry to generate a code</p>
+        <ul class="missing-fields">
+          ${missing.map(f => `<li>${f}</li>`).join('')}
+        </ul>
       `;
     }
-  } else {
-    lastSavedCode = null;
-    const missing = getMissingFields();
-    codeSection = `
-      <p class="muted" style="margin-bottom:8px">Complete your entry to generate a code</p>
-      <ul class="missing-fields">
-        ${missing.map(f => `<li>${f}</li>`).join('')}
-      </ul>
+
+    html += `
+      <div class="entry-mgmt-card entry-mgmt-mine">
+        <div class="entry-mgmt-header">
+          <span class="entry-mgmt-name">My Entry</span>
+          <span class="status-badge ${statusClass}">${statusLabel}</span>
+        </div>
+        ${codeHtml}
+      </div>
     `;
   }
 
-  const opponents = getOpponents();
-  const oppListHtml = opponents.length > 0 ? `
-    <div style="margin-top:12px">
-      <p class="muted" style="margin-bottom:6px">Saved opponents:</p>
-      ${opponents.map(o => `
-        <div class="opponent-list-item" data-id="${o.id}">
-          <span>${o.name}</span>
-          <button class="btn btn-danger opponent-delete" style="font-size:0.7rem;padding:2px 8px;margin:0">Delete</button>
+  // --- Opponent cards (always shown) ---
+  for (const opp of opponents) {
+    const savedDate = new Date(opp.savedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    html += `
+      <div class="entry-mgmt-card entry-mgmt-opponent" data-id="${opp.id}">
+        <div class="entry-mgmt-header">
+          <div>
+            <span class="entry-mgmt-name">${opp.name}</span>
+            <span class="entry-mgmt-meta">Saved ${savedDate}</span>
+          </div>
+          <div class="entry-mgmt-actions">
+            <button class="btn opponent-copy" data-id="${opp.id}">Copy Code</button>
+            <button class="btn opponent-view" data-id="${opp.id}">View</button>
+            <button class="btn-danger opponent-delete" data-id="${opp.id}">Delete</button>
+          </div>
         </div>
-      `).join('')}
-    </div>
-  ` : '';
+      </div>
+    `;
+  }
 
-  container.innerHTML = `
-    ${codeSection}
-    <hr style="border-color:var(--border);margin:16px 0">
-    <p class="muted" style="margin-bottom:8px">Add opponent:</p>
-    <div class="entry-field">
-      <label>Opponent Name</label>
-      <input type="text" class="entry-input" id="opponent-name-input" placeholder="Name">
-    </div>
-    <div class="entry-field">
-      <label>Entry Code</label>
-      <textarea class="share-code" id="opponent-code-input" rows="3" placeholder="Paste entry code here..."></textarea>
-    </div>
-    <button class="btn" id="add-opponent-btn">Add Opponent</button>
-    <div id="import-feedback"></div>
-    ${oppListHtml}
-  `;
+  // --- Import form (hidden in viewOnly) ---
+  if (!viewOnly) {
+    html += `
+      <div class="entry-mgmt-import">
+        <p class="muted" style="margin-bottom:8px">Import Entry</p>
+        <div class="entry-field">
+          <label>Opponent Name</label>
+          <input type="text" class="entry-input" id="opponent-name-input" placeholder="Name">
+        </div>
+        <div class="entry-field">
+          <label>Entry Code</label>
+          <textarea class="share-code" id="opponent-code-input" rows="3" placeholder="Paste entry code here..."></textarea>
+        </div>
+        <button class="btn" id="add-opponent-btn">Import</button>
+        <div id="import-feedback"></div>
+      </div>
+    `;
+  }
 
-  // Animate code generation
-  if (animate && isEntryComplete()) {
+  container.innerHTML = html;
+
+  // --- Wire up: animate code generation ---
+  if (animate && !viewOnly && isEntryComplete()) {
     const codeEl = document.getElementById('entry-code-output');
     const copyBtn = document.getElementById('copy-code');
     const code = getEntryCode();
     const chars = code.split('');
     let i = 0;
     const interval = setInterval(() => {
-      // Reveal in chunks for speed
       const chunk = Math.min(i + 8, chars.length);
       codeEl.value = code.slice(0, chunk);
       i = chunk;
@@ -731,7 +762,7 @@ function renderShare({ animate = false } = {}) {
     }, 15);
   }
 
-  // Copy code button
+  // --- Wire up: copy code button ---
   const copyBtn = document.getElementById('copy-code');
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
@@ -741,42 +772,64 @@ function renderShare({ animate = false } = {}) {
     });
   }
 
-  // Add opponent button
-  document.getElementById('add-opponent-btn').addEventListener('click', () => {
-    const nameInput = document.getElementById('opponent-name-input');
-    const codeInput = document.getElementById('opponent-code-input');
-    const feedback = document.getElementById('import-feedback');
-    const name = nameInput.value.trim();
-    const code = codeInput.value.trim();
-
-    if (!name) {
-      feedback.innerHTML = '<p class="error-text">Enter an opponent name</p>';
-      return;
-    }
-    if (!code) {
-      feedback.innerHTML = '<p class="error-text">Paste an entry code</p>';
-      return;
-    }
-
-    try {
-      importOpponentFromCode(code, name);
-      feedback.innerHTML = `<p class="success-text">Added ${name}!</p>`;
-      nameInput.value = '';
-      codeInput.value = '';
-      window.dispatchEvent(new CustomEvent('opponents-changed'));
-      renderShare();
-    } catch (e) {
-      feedback.innerHTML = '<p class="error-text">Invalid entry code</p>';
-    }
-  });
-
-  // Delete opponent buttons
-  container.querySelectorAll('.opponent-delete').forEach(btn => {
+  // --- Wire up: opponent Copy Code buttons ---
+  container.querySelectorAll('.opponent-copy').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.closest('.opponent-list-item').dataset.id;
-      deleteOpponent(id);
-      window.dispatchEvent(new CustomEvent('opponents-changed'));
-      renderShare();
+      const opp = opponents.find(o => o.id === btn.dataset.id);
+      if (!opp) return;
+      copyToClipboard(btoa(JSON.stringify(opp.entry)));
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy Code'; }, 2000);
     });
   });
+
+  // --- Wire up: opponent View buttons ---
+  container.querySelectorAll('.opponent-view').forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchToOpponent(btn.dataset.id);
+      renderEntryCard();
+      window.dispatchEvent(new CustomEvent('opponents-changed'));
+    });
+  });
+
+  // --- Wire up: opponent Delete buttons ---
+  container.querySelectorAll('.opponent-delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+      deleteOpponent(btn.dataset.id);
+      window.dispatchEvent(new CustomEvent('opponents-changed'));
+      renderEntryManagement();
+    });
+  });
+
+  // --- Wire up: import form ---
+  const addBtn = document.getElementById('add-opponent-btn');
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      const nameInput = document.getElementById('opponent-name-input');
+      const codeInput = document.getElementById('opponent-code-input');
+      const feedback = document.getElementById('import-feedback');
+      const name = nameInput.value.trim();
+      const code = codeInput.value.trim();
+
+      if (!name) {
+        feedback.innerHTML = '<p class="error-text">Enter an opponent name</p>';
+        return;
+      }
+      if (!code) {
+        feedback.innerHTML = '<p class="error-text">Paste an entry code</p>';
+        return;
+      }
+
+      try {
+        importOpponentFromCode(code, name);
+        feedback.innerHTML = `<p class="success-text">Added ${name}!</p>`;
+        nameInput.value = '';
+        codeInput.value = '';
+        window.dispatchEvent(new CustomEvent('opponents-changed'));
+        renderEntryManagement();
+      } catch (e) {
+        feedback.innerHTML = '<p class="error-text">Invalid entry code</p>';
+      }
+    });
+  }
 }

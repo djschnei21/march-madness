@@ -228,7 +228,7 @@ function renderTeamCards(teamResults) {
       const lg = tr.liveGame;
       liveHtml = `<div class="live-score">
         <strong>${lg.teamScore} - ${lg.opponentScore}</strong> vs ${lg.opponentName}
-        &middot; ${lg.clock} ${lg.period ? `P${lg.period}` : ''} ${lg.broadcast ? `&middot; ${lg.broadcast}` : ''}
+        &middot; ${lg.clock} ${lg.period === 1 ? '1st Half' : lg.period === 2 ? '2nd Half' : lg.period ? `OT${lg.period > 3 ? lg.period - 2 : ''}` : ''} ${lg.broadcast ? `&middot; ${lg.broadcast}` : ''}
       </div>`;
     }
 
@@ -334,7 +334,7 @@ function renderFinalFourCard(ffResult) {
 function renderUpcomingGames(teamResults) {
   const container = document.querySelector('#upcoming-card .upcoming-list');
   const heading = document.querySelector('#upcoming-card h3');
-  if (heading) heading.textContent = getActiveViewName() === 'My Entry' ? 'Your Upcoming Games' : getActiveViewName().replace(/'s Entry$/, "'s Upcoming Games");
+  if (heading) heading.textContent = getActiveViewName() === 'My Entry' ? 'Your Schedule' : getActiveViewName().replace(/'s Entry$/, "'s Schedule");
   const upcoming = [];
 
   for (const tr of teamResults) {
@@ -360,7 +360,7 @@ function renderUpcomingGames(teamResults) {
   container.innerHTML = upcoming.map(g => {
     const time = new Date(g.startTime);
     const timeStr = g.live
-      ? `<span style="color:var(--accent-amber)">LIVE ${g.clock} P${g.period}</span>`
+      ? `<span style="color:var(--accent-amber)">LIVE ${g.clock} ${g.period === 1 ? '1st Half' : g.period === 2 ? '2nd Half' : g.period ? `OT${g.period > 3 ? g.period - 2 : ''}` : ''}</span>`
       : time.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ' ' +
         time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
@@ -490,7 +490,7 @@ function setupEntrySwitcher() {
       sel.value = getActiveView().type === 'mine' ? 'mine' : getActiveView().id;
       // Scroll to the share section
       setTimeout(() => {
-        document.getElementById('entry-share')?.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('entry-management')?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
       return;
     }
