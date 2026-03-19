@@ -616,8 +616,17 @@ div.share-code {
 
 .bracket-grid {
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 0;
   min-width: 750px;
+}
+
+.bracket-grid-ff {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.bracket-round::before {
+  display: none;
 }
 
 .bracket-round {
@@ -823,10 +832,105 @@ footer {
 /* Responsive */
 @media (max-width: 768px) {
   .team-cards { grid-template-columns: 1fr; }
-  .header-content { flex-direction: column; align-items: flex-start; }
-  .score-header { width: 100%; justify-content: space-between; }
+  .header-content { flex-direction: column; align-items: flex-start; padding: 10px 12px; gap: 6px; }
+  .score-header { width: 100%; justify-content: space-between; gap: 12px; }
+  .score-header .value { font-size: 1.3rem; }
   header h1 { font-size: 1rem; }
   .info-cards { grid-template-columns: 1fr; }
+
+  /* Entry switcher full width */
+  .entry-switcher { width: 100%; min-height: 44px; }
+
+  /* Tabs */
+  .tab { padding: 10px 12px; min-height: 44px; }
+  .tab-nav { scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 90%, transparent); mask-image: linear-gradient(to right, #000 90%, transparent); }
+  .tab-nav::-webkit-scrollbar { display: none; }
+
+  /* Prevent iOS zoom on inputs */
+  .team-select, .entry-input, select, .search-dropdown input { font-size: 16px; min-height: 44px; }
+
+  /* Touch targets for all buttons */
+  .btn, .btn-danger, .btn-save-opponent, .region-btn, .btn-refresh { min-height: 44px; }
+
+  /* Dashboard team cards */
+  .round-dot { font-size: 0.6rem; width: 28px; height: 20px; }
+  .status-badge { font-size: 0.7rem; padding: 3px 10px; }
+
+  /* Entry teams table — hide Pts/Win and Logo columns */
+  .entry-teams th:nth-child(n+4), .entry-teams td:nth-child(n+4) { display: none; }
+  .entry-teams th, .entry-teams td { padding: 8px 6px; }
+
+  /* Save/Clear buttons stack */
+  .save-button-row { flex-direction: column; }
+  .btn-save-entry, .btn-clear-entry { min-height: 44px; }
+
+  /* Dropdowns — bottom sheet on mobile */
+  .search-dropdown .dropdown-list {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    top: auto;
+    max-height: 50vh;
+    z-index: 200;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+  }
+  .dropdown-item { padding: 12px; min-height: 44px; }
+
+  /* Bracket — stack rounds vertically */
+  .bracket-grid { grid-template-columns: 1fr; gap: 12px; min-width: unset; }
+  .bracket-grid-ff { grid-template-columns: 1fr; }
+  .bracket-round {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .bracket-round::before {
+    display: block;
+    content: attr(data-round);
+    width: 100%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .bracket-matchup { flex: 1 1 calc(50% - 6px); min-width: 140px; }
+  .bracket-team { min-width: 0; font-size: 0.8rem; padding: 6px 8px; }
+
+  /* Data tables — hide less important columns */
+  .player-table th:nth-child(4), .player-table td:nth-child(4),
+  .player-table th:nth-child(6), .player-table td:nth-child(6) { display: none; }
+  .leaderboard-table th:nth-child(5), .leaderboard-table td:nth-child(5),
+  .leaderboard-table th:nth-child(6), .leaderboard-table td:nth-child(6) { display: none; }
+  .player-table, .leaderboard-table { display: block; overflow-x: auto; }
+
+  /* Bracket legend */
+  .bracket-legend { gap: 8px; padding: 8px 10px; font-size: 0.7rem; }
+
+  /* View-only banner */
+  .view-only-banner { flex-direction: column; align-items: flex-start; }
+  .banner-actions { width: 100%; }
+  .banner-actions .btn, .banner-actions .btn-danger { flex: 1; }
+
+  /* Empty state */
+  .empty-state { padding: 32px 16px; }
+  .empty-state-icon { font-size: 2rem; }
+  .empty-state h2 { font-size: 1.1rem; }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .card { padding: 12px; margin-bottom: 8px; }
+  main { padding: 8px; }
+  .tab { padding: 10px 10px; font-size: 0.75rem; }
+  .bracket-legend { display: grid; grid-template-columns: 1fr 1fr; }
+  .region-btn { padding: 6px 10px; font-size: 0.75rem; }
+  .bracket-matchup { flex: 1 1 100%; }
 }
 
 /* View-only banner */

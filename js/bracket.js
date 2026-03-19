@@ -85,17 +85,17 @@ function renderRegionBracket(region, pickedIds) {
 
   let html = `<div class="bracket-region">
     <div class="bracket-region-title">${region} Region</div>
-    <div class="bracket-grid" style="grid-template-columns: repeat(4, 1fr);">`;
+    <div class="bracket-grid">`;
 
   // Round of 64
-  html += '<div class="bracket-round">';
+  html += '<div class="bracket-round" data-round="Round of 64">';
   for (const matchup of r64) {
     html += renderMatchup(matchup.top, matchup.bottom, pickedIds, 'picked');
   }
   html += '</div>';
 
   // R32
-  html += '<div class="bracket-round">';
+  html += '<div class="bracket-round" data-round="Round of 32">';
   for (let i = 0; i < 4; i++) {
     const t1 = advancedTeams.r32?.[i * 2];
     const t2 = advancedTeams.r32?.[i * 2 + 1];
@@ -108,7 +108,7 @@ function renderRegionBracket(region, pickedIds) {
   html += '</div>';
 
   // S16
-  html += '<div class="bracket-round">';
+  html += '<div class="bracket-round" data-round="Sweet 16">';
   for (let i = 0; i < 2; i++) {
     const t1 = advancedTeams.s16?.[i * 2];
     const t2 = advancedTeams.s16?.[i * 2 + 1];
@@ -121,7 +121,7 @@ function renderRegionBracket(region, pickedIds) {
   html += '</div>';
 
   // E8
-  html += '<div class="bracket-round">';
+  html += '<div class="bracket-round" data-round="Elite 8">';
   const e1 = advancedTeams.e8?.[0];
   const e2 = advancedTeams.e8?.[1];
   html += renderMatchup(
@@ -226,10 +226,10 @@ function renderFinalFour(ffPickIds, ffPicks, championPick) {
 
   let html = `<div class="bracket-region bracket-final-four">
     <div class="bracket-region-title">Part II — Final Four & Championship${champTeam ? ` <span class="bracket-region-pick">Champion pick: ${champTeam.name}</span>` : ''}</div>
-    <div class="bracket-grid" style="grid-template-columns: repeat(2, 1fr);">`;
+    <div class="bracket-grid bracket-grid-ff">`;
 
   // Semifinals — highlight with purple (Part II picks)
-  html += '<div class="bracket-round">';
+  html += '<div class="bracket-round" data-round="Semifinals">';
   if (ffGames.length >= 2) {
     for (const game of ffGames.slice(0, 2)) {
       const comp = game.competitions?.[0];
@@ -256,7 +256,7 @@ function renderFinalFour(ffPickIds, ffPicks, championPick) {
   html += '</div>';
 
   // Championship
-  html += '<div class="bracket-round">';
+  html += '<div class="bracket-round" data-round="Championship">';
   if (champGame) {
     const comp = champGame.competitions?.[0];
     const t1 = comp?.competitors?.[0]?.team;
