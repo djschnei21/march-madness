@@ -953,6 +953,24 @@ footer {
   margin: 0;
 }
 
+.entry-mgmt-howto {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  line-height: 1.45;
+}
+
+.entry-mgmt-howto strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.entry-mgmt-howto em {
+  color: var(--accent-blue);
+  font-style: normal;
+}
+
 .entry-mgmt-import {
   margin-top: 14px;
   padding-top: 14px;

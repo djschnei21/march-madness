@@ -645,6 +645,14 @@ function renderEntryManagement({ animate = false } = {}) {
   const opponents = getOpponents();
   let html = '';
 
+  // --- How it works blurb ---
+  html += `
+    <div class="entry-mgmt-howto">
+      <strong>How sharing works</strong>
+      <p>Save your entry to get a share code. Send it to friends so they can import your picks, and paste theirs here to track everyone's progress. Use the <em>entry selector</em> in the header to switch between entries, and check the <em>Leaderboard</em> tab to see how everyone stacks up.</p>
+    </div>
+  `;
+
   // --- My Entry card (hidden in viewOnly) ---
   if (!viewOnly) {
     const complete = isEntryComplete();
