@@ -571,6 +571,9 @@ async function renderLeaderboard() {
     return;
   }
 
+  // Show loading indicator while fetching data
+  container.innerHTML = '<div class="leaderboard-loading"><div class="spinner"></div> Loading leaderboard…</div>';
+
   // Ensure player scoring data is loaded for high scorer bonus
   if (topScorerName === null) {
     const players = await fetchPlayerScoring();
