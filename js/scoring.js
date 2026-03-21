@@ -94,19 +94,20 @@ export function calculateScoring(entryOverride = null, { playerLeader = null, to
 }
 
 function checkChampionBonus(entry) {
-  const allGames = getAllGames();
-  // Find championship game
-  const champGame = allGames.find(g => {
-    const note = g.competitions?.[0]?.notes?.[0]?.headline || '';
-    return note.includes('Championship') || note.includes('National Championship');
+  // Find the championship game by checking the picked team's games for a 'Final' round
+  // Don't use raw ESPN notes here — they include "Championship" in all rounds
+  // (e.g. "NCAA Championship - First Round"), which causes false positives.
+  const champTeam = getTeamById(entry.champion);
+  if (!champTeam) return { pick: null, status: 'pending', earned: false, possible: false };
+
+  const games = getGamesForTeam(entry.champion);
+  const champGame = games.find(g => {
+    const r = getTeamResult(g, entry.champion);
+    return r?.roundLabel === 'Final';
   });
 
   if (!champGame) {
-    // Check if champion team is still alive
-    const champTeam = getTeamById(entry.champion);
-    if (!champTeam) return { pick: null, status: 'pending', earned: false, possible: false };
-
-    const games = getGamesForTeam(entry.champion);
+    // Championship game not yet reached — check if team is still alive
     const eliminated = games.some(g => {
       const r = getTeamResult(g, entry.champion);
       return r?.completed && r?.lost;
