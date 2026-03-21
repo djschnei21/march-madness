@@ -141,21 +141,22 @@ function updateLastRefresh() {
 }
 
 // ---- Helpers ----
-function isTournamentComplete() {
-  const allGames = getAllGames();
-  const champGame = allGames.find(g => {
-    const note = g.competitions?.[0]?.notes?.[0]?.headline || '';
-    return note.includes('Championship') || note.includes('National Championship');
+// Find championship game by date (Apr 6) to avoid false positives from ESPN notes
+// that include "Championship" in all rounds (e.g. "NCAA Championship - First Round")
+function findChampionshipGame() {
+  return getAllGames().find(g => {
+    const date = g.date?.slice(0, 10)?.replace(/-/g, '') || '';
+    return date === '20260406';
   });
+}
+
+function isTournamentComplete() {
+  const champGame = findChampionshipGame();
   return champGame?.status?.type?.completed === true;
 }
 
 function getActualChampionshipTotal() {
-  const allGames = getAllGames();
-  const champGame = allGames.find(g => {
-    const note = g.competitions?.[0]?.notes?.[0]?.headline || '';
-    return note.includes('Championship') || note.includes('National Championship');
-  });
+  const champGame = findChampionshipGame();
   if (!champGame?.status?.type?.completed) return null;
   const competitors = champGame.competitions?.[0]?.competitors || [];
   if (competitors.length < 2) return null;
