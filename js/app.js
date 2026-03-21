@@ -1,12 +1,13 @@
 // Main application - init, tab routing, refresh loop, dashboard rendering
 import { loadTeams, getTeamById, teamLogoUrl } from './teams.js';
 import { loadEntry, getEntry, getPickedTeamIds, hasAnyPicks, onChange, renderEntryCard, savePlayerCache, isViewOnly, getOpponents, switchToMyEntry, switchToOpponent, getActiveView, getActiveViewName } from './entry.js';
-import { refreshScores, isAnyGameLive, getLastFetchTime, getGamesForTeam, getTeamResult, fetchPlayerScoring, fetchNews } from './espn.js';
+import { refreshScores, isAnyGameLive, getLastFetchTime, getAllGames, getGamesForTeam, getTeamResult, fetchPlayerScoring, fetchNews } from './espn.js';
 import { calculateScoring } from './scoring.js';
 import { renderBracket } from './bracket.js';
 
 let refreshTimer = null;
 let activeTab = 'dashboard';
+let topScorerName = null;
 
 const STATUS_LABELS = {
   alive: 'Alive',
@@ -139,6 +140,32 @@ function updateLastRefresh() {
   startRefreshLoop();
 }
 
+// ---- Helpers ----
+function isTournamentComplete() {
+  const allGames = getAllGames();
+  const champGame = allGames.find(g => {
+    const note = g.competitions?.[0]?.notes?.[0]?.headline || '';
+    return note.includes('Championship') || note.includes('National Championship');
+  });
+  return champGame?.status?.type?.completed === true;
+}
+
+function getActualChampionshipTotal() {
+  const allGames = getAllGames();
+  const champGame = allGames.find(g => {
+    const note = g.competitions?.[0]?.notes?.[0]?.headline || '';
+    return note.includes('Championship') || note.includes('National Championship');
+  });
+  if (!champGame?.status?.type?.completed) return null;
+  const competitors = champGame.competitions?.[0]?.competitors || [];
+  if (competitors.length < 2) return null;
+  return (parseInt(competitors[0].score) || 0) + (parseInt(competitors[1].score) || 0);
+}
+
+function scoringOptions() {
+  return { playerLeader: topScorerName, tournamentComplete: isTournamentComplete() };
+}
+
 // ---- Dashboard Rendering ----
 function renderDashboard() {
   if (!hasAnyPicks()) {
@@ -146,7 +173,7 @@ function renderDashboard() {
     return;
   }
 
-  const scoring = calculateScoring();
+  const scoring = calculateScoring(null, scoringOptions());
   if (!scoring) return;
 
   // Update header scores
@@ -387,6 +414,9 @@ async function renderHighScorer() {
     return;
   }
 
+  // Track tournament scoring leader for high scorer bonus verification
+  topScorerName = players[0]?.name || null;
+
   // Cache player names for high scorer autocomplete on entry card
   savePlayerCache(players);
 
@@ -531,7 +561,7 @@ function renderEntrySwitcher() {
 }
 
 // ---- Leaderboard ----
-function renderLeaderboard() {
+async function renderLeaderboard() {
   const container = document.getElementById('leaderboard-content');
   const opponents = getOpponents();
 
@@ -539,6 +569,14 @@ function renderLeaderboard() {
     container.innerHTML = '<p class="muted">Save opponent entries to see the leaderboard.</p>';
     return;
   }
+
+  // Ensure player scoring data is loaded for high scorer bonus
+  if (topScorerName === null) {
+    const players = await fetchPlayerScoring();
+    if (players?.length > 0) topScorerName = players[0].name;
+  }
+
+  const opts = scoringOptions();
 
   // Score own entry
   const STORAGE_KEY = 'mm2026_entry';
@@ -548,7 +586,7 @@ function renderLeaderboard() {
   const rows = [];
 
   if (myEntry) {
-    const scoring = calculateScoring(myEntry);
+    const scoring = calculateScoring(myEntry, opts);
     if (scoring) {
       rows.push({
         name: 'My Entry',
@@ -556,13 +594,14 @@ function renderLeaderboard() {
         maxPossible: scoring.maxPossible,
         champion: scoring.championResult,
         finalFour: scoring.finalFourResult,
+        tiebreaker: myEntry.tiebreaker || 0,
         isMine: true,
       });
     }
   }
 
   for (const opp of opponents) {
-    const scoring = calculateScoring(opp.entry);
+    const scoring = calculateScoring(opp.entry, opts);
     if (scoring) {
       rows.push({
         name: opp.name,
@@ -570,16 +609,47 @@ function renderLeaderboard() {
         maxPossible: scoring.maxPossible,
         champion: scoring.championResult,
         finalFour: scoring.finalFourResult,
+        tiebreaker: opp.entry.tiebreaker || 0,
         isMine: false,
       });
     }
   }
 
+  // Check for jackpot winners (Part II — all 4 Final Four picks correct)
+  const jackpotWinners = rows.filter(r => r.finalFour.sweepWin);
+  const isJackpot = jackpotWinners.length > 0;
+
+  // Sort by points descending
   rows.sort((a, b) => b.points - a.points);
 
-  let html = `<table class="leaderboard-table">
+  // Apply tiebreaker for 1st place ties (only when championship is complete)
+  const actualTotal = getActualChampionshipTotal();
+  if (!isJackpot && actualTotal !== null && rows.length >= 2 && rows[0].points === rows[1].points) {
+    const topScore = rows[0].points;
+    let tieEnd = 0;
+    while (tieEnd < rows.length && rows[tieEnd].points === topScore) tieEnd++;
+    const tieGroup = rows.splice(0, tieEnd);
+    tieGroup.sort((a, b) => Math.abs(a.tiebreaker - actualTotal) - Math.abs(b.tiebreaker - actualTotal));
+    rows.unshift(...tieGroup);
+  }
+
+  let html = '';
+
+  // Jackpot banner
+  if (isJackpot) {
+    const names = jackpotWinners.map(w => w.name).join(', ');
+    html += `<div class="jackpot-banner">
+      JACKPOT! ${names} picked all 4 Final Four teams correctly and win${jackpotWinners.length === 1 ? 's' : ''} the entire pot!
+      <div class="muted" style="font-size:0.8rem;margin-top:4px;">All Part I scoring is voided.</div>
+    </div>`;
+  }
+
+  // Tiebreaker column header
+  const tbHeader = actualTotal !== null ? `Tiebreaker (Actual: ${actualTotal})` : 'Tiebreaker';
+
+  html += `<table class="leaderboard-table">
     <thead><tr>
-      <th>#</th><th>Name</th><th>Pts</th><th>Max</th><th>Champion</th><th>FF Sweep</th>
+      <th>#</th><th>Name</th><th>Pts</th><th>Max</th><th>${tbHeader}</th><th>Champion</th><th>FF Sweep</th>
     </tr></thead><tbody>`;
 
   rows.forEach((r, i) => {
@@ -587,11 +657,20 @@ function renderLeaderboard() {
     const champStatus = r.champion.status;
     const ffStatus = r.finalFour.sweepWin ? 'WON' : r.finalFour.possible ? 'Alive' : 'Dead';
     const cls = r.isMine ? 'highlight' : '';
+    const ptsClass = isJackpot ? 'voided' : '';
+
+    // Tiebreaker display
+    let tbDisplay = r.tiebreaker > 0 ? `${r.tiebreaker}` : '-';
+    if (actualTotal !== null && r.tiebreaker > 0) {
+      tbDisplay += ` <span class="muted">(off by ${Math.abs(r.tiebreaker - actualTotal)})</span>`;
+    }
+
     html += `<tr class="${cls}">
       <td>${i + 1}</td>
       <td>${r.name}${r.isMine ? ' (you)' : ''}</td>
-      <td><strong>${r.points}</strong></td>
-      <td>${r.maxPossible}</td>
+      <td class="${ptsClass}"><strong>${r.points}</strong></td>
+      <td class="${ptsClass}">${r.maxPossible}</td>
+      <td>${tbDisplay}</td>
       <td>${champName} <span class="muted">(${displayStatus(champStatus)})</span></td>
       <td>${ffStatus}</td>
     </tr>`;

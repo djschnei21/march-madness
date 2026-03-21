@@ -6,7 +6,7 @@ import { getAllGames, getGamesForTeam, getTeamResult } from './espn.js';
 const ROUNDS = ['R64', 'R32', 'S16', 'E8', 'FF', 'Final'];
 const ROUND_ORDER = { 'R64': 0, 'R32': 1, 'S16': 2, 'E8': 3, 'FF': 4, 'Final': 5 };
 
-export function calculateScoring(entryOverride = null) {
+export function calculateScoring(entryOverride = null, { playerLeader = null, tournamentComplete = false } = {}) {
   const entry = entryOverride || getEntry();
   if (!entry) return null;
 
@@ -75,10 +75,10 @@ export function calculateScoring(entryOverride = null) {
   if (championResult.earned) partITotal += 10;
   if (championResult.possible) maxPossible += 10;
 
-  // Check high scorer bonus (can't fully determine until tournament ends)
-  const highScorerResult = { pick: entry.highScorer, teamId: entry.highScorerTeamId, status: 'pending' };
-  // If the high scorer's team is eliminated, they can't score more but might still lead
-  maxPossible += 10; // always possible until tournament ends
+  // Check high scorer bonus
+  const highScorerResult = checkHighScorerBonus(entry, playerLeader, tournamentComplete);
+  if (highScorerResult.earned) partITotal += 10;
+  if (highScorerResult.possible) maxPossible += 10;
 
   // Part II: Final Four
   const finalFourResult = checkFinalFour(entry);
@@ -133,6 +133,31 @@ function checkChampionBonus(entry) {
   }
 
   return { pick: getTeamById(entry.champion), status: 'pending', earned: false, possible: true };
+}
+
+function checkHighScorerBonus(entry, playerLeader, tournamentComplete) {
+  const pick = entry.highScorer;
+  const teamId = entry.highScorerTeamId;
+
+  if (!pick) return { pick: null, teamId, status: 'pending', earned: false, possible: false };
+
+  // Only determine the winner once the tournament is fully complete
+  if (!tournamentComplete) {
+    return { pick, teamId, status: 'pending', earned: false, possible: true };
+  }
+
+  if (!playerLeader) {
+    return { pick, teamId, status: 'pending', earned: false, possible: true };
+  }
+
+  const match = pick.trim().toLowerCase() === playerLeader.trim().toLowerCase();
+  return {
+    pick,
+    teamId,
+    status: match ? 'correct' : 'incorrect',
+    earned: match,
+    possible: match,
+  };
 }
 
 function checkFinalFour(entry) {
