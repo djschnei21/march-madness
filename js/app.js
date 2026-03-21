@@ -62,6 +62,14 @@ async function init() {
     renderBracket();
     startRefreshLoop();
     updateLastRefresh();
+
+    // Eager-load player scoring for high scorer bonus (non-blocking)
+    fetchPlayerScoring().then(players => {
+      if (players?.length > 0) {
+        topScorerName = players[0].name;
+        renderDashboard();
+      }
+    });
   } else {
     renderDashboard();
     renderBracket();
@@ -129,6 +137,10 @@ function startRefreshLoop() {
     renderDashboard();
     if (activeTab === 'bracket') renderBracket(getActiveRegion());
     updateLastRefresh();
+    // Keep player scoring data current (non-blocking, cached per generation)
+    fetchPlayerScoring().then(players => {
+      if (players?.length > 0) topScorerName = players[0].name;
+    });
   }, interval);
 }
 

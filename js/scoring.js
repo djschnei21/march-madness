@@ -1,14 +1,32 @@
 // Scoring engine: (seed+4)*wins, bonuses, Part II
 import { getTeamById } from './teams.js';
 import { getEntry, getPickedTeamIds } from './entry.js';
-import { getAllGames, getGamesForTeam, getTeamResult } from './espn.js';
+import { getAllGames, getGamesForTeam, getTeamResult, getScoreGeneration } from './espn.js';
 
 const ROUNDS = ['R64', 'R32', 'S16', 'E8', 'FF', 'Final'];
 const ROUND_ORDER = { 'R64': 0, 'R32': 1, 'S16': 2, 'E8': 3, 'FF': 4, 'Final': 5 };
 
+let scoringCache = { generation: -1, map: new Map() };
+
+function entryCacheKey(entry, opts) {
+  const teams = entry.teams.map(t => t.teamId || 0).join(',');
+  const bonus = `${entry.champion || 0}|${entry.highScorer || ''}|${entry.highScorerTeamId || 0}`;
+  const ff = Object.values(entry.finalFour || {}).join(',');
+  const o = `${opts.playerLeader || ''}|${opts.tournamentComplete ? 1 : 0}`;
+  return `${teams}|${bonus}|${ff}|${o}`;
+}
+
 export function calculateScoring(entryOverride = null, { playerLeader = null, tournamentComplete = false } = {}) {
   const entry = entryOverride || getEntry();
   if (!entry) return null;
+
+  const opts = { playerLeader, tournamentComplete };
+  const gen = getScoreGeneration();
+  if (scoringCache.generation !== gen) {
+    scoringCache = { generation: gen, map: new Map() };
+  }
+  const key = entryCacheKey(entry, opts);
+  if (scoringCache.map.has(key)) return scoringCache.map.get(key);
 
   const teamResults = [];
   let partITotal = 0;
@@ -83,7 +101,7 @@ export function calculateScoring(entryOverride = null, { playerLeader = null, to
   // Part II: Final Four
   const finalFourResult = checkFinalFour(entry);
 
-  return {
+  const result = {
     teamResults,
     partITotal,
     maxPossible,
@@ -91,6 +109,8 @@ export function calculateScoring(entryOverride = null, { playerLeader = null, to
     highScorerResult,
     finalFourResult,
   };
+  scoringCache.map.set(key, result);
+  return result;
 }
 
 function checkChampionBonus(entry) {

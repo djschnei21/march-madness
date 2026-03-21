@@ -5,6 +5,12 @@ const NEWS_CACHE_KEY = 'mm2026_news_cache';
 
 let gameCache = loadCache();
 let newsCache = null;
+let scoreGeneration = 0;
+let playerScoringCache = { generation: -1, data: null };
+let teamGamesCache = { generation: -1, map: new Map() };
+let teamResultCache = { generation: -1, map: new Map() };
+
+export function getScoreGeneration() { return scoreGeneration; }
 
 // Tournament dates for 2026
 // R64: Mar 19-20, R32: Mar 21-22, S16: Mar 26-27, E8: Mar 28-29
@@ -149,6 +155,7 @@ export async function refreshScores() {
   allGames = newGames;
   liveGames = newLive;
   lastFetchTime = Date.now();
+  scoreGeneration++;
   saveCache();
 
   return { allGames, liveGames };
@@ -159,16 +166,29 @@ export function getLiveGames() { return liveGames; }
 export function getLastFetchTime() { return lastFetchTime; }
 export function isAnyGameLive() { return liveGames.length > 0; }
 
-// Get games for a specific team (by ESPN ID)
+// Get games for a specific team (by ESPN ID), cached per generation
 export function getGamesForTeam(teamId) {
-  return allGames.filter(game => {
+  if (teamGamesCache.generation !== scoreGeneration) {
+    teamGamesCache = { generation: scoreGeneration, map: new Map() };
+  }
+  if (teamGamesCache.map.has(teamId)) return teamGamesCache.map.get(teamId);
+
+  const games = allGames.filter(game => {
     const competitors = game.competitions?.[0]?.competitors || [];
     return competitors.some(c => parseInt(c.team?.id) === teamId);
   });
+  teamGamesCache.map.set(teamId, games);
+  return games;
 }
 
-// Get team result from a game event
+// Get team result from a game event, cached per generation
 export function getTeamResult(game, teamId) {
+  if (teamResultCache.generation !== scoreGeneration) {
+    teamResultCache = { generation: scoreGeneration, map: new Map() };
+  }
+  const cacheKey = `${game.id}_${teamId}`;
+  if (teamResultCache.map.has(cacheKey)) return teamResultCache.map.get(cacheKey);
+
   const comp = game.competitions?.[0];
   if (!comp) return null;
 
@@ -177,7 +197,7 @@ export function getTeamResult(game, teamId) {
   if (!competitor) return null;
 
   const status = game.status?.type;
-  return {
+  const result = {
     game,
     teamScore: parseInt(competitor.score) || 0,
     opponentScore: parseInt(opponent?.score) || 0,
@@ -196,6 +216,8 @@ export function getTeamResult(game, teamId) {
     roundLabel: getRoundLabel(game),
     eventId: game.id,
   };
+  teamResultCache.map.set(cacheKey, result);
+  return result;
 }
 
 function getRoundLabel(game) {
@@ -219,8 +241,12 @@ function getRoundLabel(game) {
   return 'Final';
 }
 
-// Fetch player scoring leaders across all completed games
+// Fetch player scoring leaders across all completed games, cached per generation
 export async function fetchPlayerScoring() {
+  if (playerScoringCache.generation === scoreGeneration && playerScoringCache.data) {
+    return playerScoringCache.data;
+  }
+
   const completedGames = allGames.filter(g => g.status?.type?.completed);
   const playerMap = {};
 
@@ -258,8 +284,10 @@ export async function fetchPlayerScoring() {
     }
   }
 
-  return Object.values(playerMap)
+  const result = Object.values(playerMap)
     .sort((a, b) => b.totalPoints - a.totalPoints);
+  playerScoringCache = { generation: scoreGeneration, data: result };
+  return result;
 }
 
 // Fetch team roster (cached permanently per team)
