@@ -23,6 +23,7 @@ const BLANK_ENTRY = {
   champion: null,
   highScorer: '',
   highScorerTeamId: null,
+  highScorerPlayerId: null,
   finalFour: {
     East: null,
     West: null,
@@ -123,9 +124,10 @@ export function updateChampion(teamId) {
   saveEntry();
 }
 
-export function updateHighScorer(name, teamId, { quiet = false } = {}) {
+export function updateHighScorer(name, teamId, { quiet = false, playerId = null } = {}) {
   entry.highScorer = name;
   if (teamId !== undefined) entry.highScorerTeamId = teamId || entry.highScorerTeamId;
+  if (playerId !== undefined) entry.highScorerPlayerId = playerId;
   quiet ? saveQuiet() : saveEntry();
 }
 
@@ -462,13 +464,13 @@ function renderBonusPicks() {
         <select class="team-select" id="highscorer-player-select">
           <option value="">Select player...</option>
           ${roster.map(p => `
-            <option value="${p.name}" ${p.name === entry.highScorer ? 'selected' : ''}>
+            <option value="${p.playerId}" ${String(p.playerId) === String(entry.highScorerPlayerId) ? 'selected' : ''}>
               ${p.name}${p.position ? ' (' + p.position + ')' : ''}
             </option>
           `).join('')}
-          <option value="__custom__" ${entry.highScorer && !roster.some(p => p.name === entry.highScorer) ? 'selected' : ''}>Other (type name)...</option>
+          <option value="__custom__" ${entry.highScorer && !roster.some(p => String(p.playerId) === String(entry.highScorerPlayerId)) ? 'selected' : ''}>Other (type name)...</option>
         </select>
-        ${entry.highScorer && !roster.some(p => p.name === entry.highScorer) ? `
+        ${entry.highScorer && !roster.some(p => String(p.playerId) === String(entry.highScorerPlayerId)) ? `
           <input type="text" class="entry-input" id="highscorer-name-custom"
                  value="${entry.highScorer || ''}" placeholder="Type player name..."
                  style="margin-top:6px">
@@ -486,7 +488,7 @@ function renderBonusPicks() {
   document.getElementById('highscorer-team').addEventListener('change', (e) => {
     const teamId = parseInt(e.target.value) || null;
     if (teamId !== entry.highScorerTeamId) {
-      updateHighScorer('', teamId);
+      updateHighScorer('', teamId, { playerId: null });
     }
     if (teamId && !rosterCache[teamId]) {
       // Show loading state immediately
@@ -513,10 +515,13 @@ function renderBonusPicks() {
   if (playerSelect) {
     playerSelect.addEventListener('change', (e) => {
       if (e.target.value === '__custom__') {
-        updateHighScorer('', undefined, { quiet: true });
+        updateHighScorer('', undefined, { quiet: true, playerId: null });
         renderBonusPicks();
       } else {
-        updateHighScorer(e.target.value, undefined);
+        const pid = e.target.value;
+        const roster = rosterCache[entry.highScorerTeamId] || [];
+        const player = roster.find(p => String(p.playerId) === pid);
+        updateHighScorer(player?.name || '', undefined, { playerId: pid });
       }
     });
   }

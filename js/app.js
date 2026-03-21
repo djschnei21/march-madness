@@ -7,7 +7,7 @@ import { renderBracket } from './bracket.js';
 
 let refreshTimer = null;
 let activeTab = 'dashboard';
-let topScorerName = null;
+let topScorer = null; // { name, playerId }
 
 const STATUS_LABELS = {
   alive: 'Alive',
@@ -164,7 +164,7 @@ function getActualChampionshipTotal() {
 }
 
 function scoringOptions() {
-  return { playerLeader: topScorerName, tournamentComplete: isTournamentComplete() };
+  return { playerLeader: topScorer, tournamentComplete: isTournamentComplete() };
 }
 
 // ---- Dashboard Rendering ----
@@ -416,11 +416,12 @@ async function renderHighScorer() {
   }
 
   // Track tournament scoring leader for high scorer bonus verification
-  topScorerName = players[0]?.name || null;
+  topScorer = players[0] ? { name: players[0].name, playerId: players[0].playerId } : null;
 
   // Cache player names for high scorer autocomplete on entry card
   savePlayerCache(players);
 
+  const pickedPlayerId = entry?.highScorerPlayerId;
   const highScorerName = entry?.highScorer?.toLowerCase() || '';
 
   let html = `<table class="player-table">
@@ -429,8 +430,10 @@ async function renderHighScorer() {
     </tr></thead><tbody>`;
 
   players.slice(0, 50).forEach((p, i) => {
-    const isHighlight = p.name.toLowerCase().includes(highScorerName) ||
-      (entry?.highScorerTeamId && p.teamId === entry.highScorerTeamId && p.name.toLowerCase().includes(highScorerName.split(' ').pop()));
+    // Match by playerId first to avoid ambiguity with duplicate names
+    const isHighlight = pickedPlayerId
+      ? String(p.playerId) === String(pickedPlayerId)
+      : (highScorerName && p.name.toLowerCase().includes(highScorerName));
     const cls = isHighlight ? 'highlight' : '';
     const ppg = p.games > 0 ? (p.totalPoints / p.games).toFixed(1) : '0.0';
 
@@ -572,9 +575,9 @@ async function renderLeaderboard() {
   }
 
   // Ensure player scoring data is loaded for high scorer bonus
-  if (topScorerName === null) {
+  if (topScorer === null) {
     const players = await fetchPlayerScoring();
-    if (players?.length > 0) topScorerName = players[0].name;
+    if (players?.length > 0) topScorer = { name: players[0].name, playerId: players[0].playerId };
   }
 
   const opts = scoringOptions();

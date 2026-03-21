@@ -139,6 +139,7 @@ function checkChampionBonus(entry) {
 function checkHighScorerBonus(entry, playerLeader, tournamentComplete) {
   const pick = entry.highScorer;
   const teamId = entry.highScorerTeamId;
+  const playerId = entry.highScorerPlayerId;
 
   if (!pick) return { pick: null, teamId, status: 'pending', earned: false, possible: false };
 
@@ -151,7 +152,11 @@ function checkHighScorerBonus(entry, playerLeader, tournamentComplete) {
     return { pick, teamId, status: 'pending', earned: false, possible: true };
   }
 
-  const match = pick.trim().toLowerCase() === playerLeader.trim().toLowerCase();
+  // Match by playerId first (avoids ambiguity with duplicate names like siblings),
+  // fall back to case-insensitive name match for entries without a playerId
+  const match = playerId
+    ? String(playerId) === String(playerLeader.playerId)
+    : pick.trim().toLowerCase() === playerLeader.name.trim().toLowerCase();
   return {
     pick,
     teamId,
