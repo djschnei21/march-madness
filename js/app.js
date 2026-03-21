@@ -694,8 +694,15 @@ async function renderLeaderboard() {
   const jackpotWinners = rows.filter(r => r.finalFour.sweepWin);
   const isJackpot = jackpotWinners.length > 0;
 
-  // Sort by points descending
-  rows.sort((a, b) => b.points - a.points);
+  // Sort by points descending; jackpot winners always on top
+  rows.sort((a, b) => {
+    if (isJackpot) {
+      const aJackpot = a.finalFour.sweepWin ? 1 : 0;
+      const bJackpot = b.finalFour.sweepWin ? 1 : 0;
+      if (aJackpot !== bJackpot) return bJackpot - aJackpot;
+    }
+    return b.points - a.points;
+  });
 
   // Apply tiebreaker for 1st place ties (only when championship is complete)
   const actualTotal = getActualChampionshipTotal();

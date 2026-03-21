@@ -194,6 +194,7 @@ function checkFinalFour(entry) {
     if (!team) {
       results[region] = { pick: null, status: 'empty', correct: false };
       allCorrect = false;
+      anyEliminated = true; // sweep impossible without all 4 picks
       continue;
     }
 
