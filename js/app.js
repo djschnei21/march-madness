@@ -55,6 +55,8 @@ async function init() {
 
   // Only fetch data and start refresh loop if picks exist
   if (hasAnyPicks()) {
+    document.getElementById('team-cards').innerHTML =
+      '<div class="loading-indicator"><div class="spinner"></div> Loading scores…</div>';
     await refreshScores();
     renderDashboard();
     renderBracket();
@@ -106,7 +108,12 @@ function getActiveRegion() {
 
 function setupRefreshButton() {
   document.getElementById('btn-refresh')?.addEventListener('click', async () => {
+    const btn = document.getElementById('btn-refresh');
+    btn.disabled = true;
+    btn.classList.add('refreshing');
     await refreshScores();
+    btn.disabled = false;
+    btn.classList.remove('refreshing');
     renderDashboard();
     if (activeTab === 'bracket') renderBracket(getActiveRegion());
     updateLastRefresh();
@@ -194,7 +201,7 @@ function renderDashboard() {
   renderFinalFourCard(scoring.finalFourResult);
 
   // Upcoming games
-  renderUpcomingGames(scoring.teamResults);
+  renderUpcomingGames(scoring);
 
   // Headlines (async, non-blocking)
   renderHeadlines();
@@ -359,20 +366,61 @@ function renderFinalFourCard(ffResult) {
   container.innerHTML = html;
 }
 
-function renderUpcomingGames(teamResults) {
+function renderUpcomingGames(scoring) {
   const container = document.querySelector('#upcoming-card .upcoming-list');
   const heading = document.querySelector('#upcoming-card h3');
   if (heading) heading.textContent = getActiveViewName() === 'My Entry' ? 'Your Schedule' : getActiveViewName().replace(/'s Entry$/, "'s Schedule");
+
+  // Collect Part I team IDs
+  const partITeamIds = new Set(scoring.teamResults.map(tr => tr.team.id));
+
+  // Build a map of teamId -> { team, tags[] } for all bonus picks not already in Part I
+  const bonusTeams = new Map();
+  const addBonusTeam = (teamId, team, tag) => {
+    if (!teamId || !team || partITeamIds.has(teamId)) return;
+    if (!bonusTeams.has(teamId)) bonusTeams.set(teamId, { team, tags: [] });
+    bonusTeams.get(teamId).tags.push(tag);
+  };
+
+  // Final Four picks
+  if (scoring.finalFourResult?.results) {
+    for (const region of Object.values(scoring.finalFourResult.results)) {
+      if (region.pick) addBonusTeam(region.pick.id, region.pick, 'Final Four');
+    }
+  }
+  // Champion pick
+  if (scoring.championResult?.pick) {
+    addBonusTeam(scoring.championResult.pick.id, scoring.championResult.pick, 'Champion');
+  }
+  // High scorer team
+  if (scoring.highScorerResult?.teamId) {
+    const hsTeam = getTeamById(scoring.highScorerResult.teamId);
+    if (hsTeam) addBonusTeam(hsTeam.id, hsTeam, 'High Scorer');
+  }
+
   const upcoming = [];
 
-  for (const tr of teamResults) {
+  // Part I teams (no tag)
+  for (const tr of scoring.teamResults) {
     if (tr.status === 'eliminated') continue;
     const games = getGamesForTeam(tr.team.id);
     for (const game of games) {
       const result = getTeamResult(game, tr.team.id);
       if (!result) continue;
       if (result.scheduled || result.live) {
-        upcoming.push({ ...result, team: tr.team });
+        upcoming.push({ ...result, team: tr.team, tag: null });
+      }
+    }
+  }
+
+  // Bonus teams (with tag)
+  for (const [teamId, { team, tags }] of bonusTeams) {
+    const games = getGamesForTeam(teamId);
+    for (const game of games) {
+      const result = getTeamResult(game, teamId);
+      if (!result) continue;
+      if (result.scheduled || result.live) {
+        upcoming.push({ ...result, team, tag: tags.join(', ') });
       }
     }
   }
@@ -392,9 +440,18 @@ function renderUpcomingGames(teamResults) {
       : time.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ' ' +
         time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
+    // Determine tag color based on first tag keyword
+    let tagHtml = '';
+    if (g.tag) {
+      let color = 'var(--accent-purple)';
+      if (g.tag.includes('Champion')) color = 'var(--accent-amber)';
+      else if (g.tag.includes('High Scorer')) color = 'var(--accent-blue)';
+      tagHtml = ` <span class="schedule-tag" style="color:${color}">${g.tag}</span>`;
+    }
+
     return `<div class="upcoming-game">
       <div>
-        <strong>${g.team.name}</strong> vs ${g.opponentName}
+        <strong>${g.team.name}</strong>${tagHtml} vs ${g.opponentName}
         <div class="upcoming-time">${timeStr}</div>
       </div>
       ${g.broadcast ? `<span class="upcoming-tv">${g.broadcast}</span>` : ''}
@@ -405,7 +462,7 @@ function renderUpcomingGames(teamResults) {
 // ---- High Scorer Tab ----
 async function renderHighScorer() {
   const container = document.getElementById('player-leaderboard');
-  container.innerHTML = '<p class="muted">Loading player stats...</p>';
+  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading player stats…</div>';
 
   const entry = getEntry();
   const players = await fetchPlayerScoring();
@@ -452,6 +509,8 @@ async function renderHighScorer() {
 async function renderHeadlines() {
   const container = document.querySelector('#headlines-card .headlines-list');
   if (!container) return;
+
+  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading headlines…</div>';
 
   const entry = getEntry();
   const newsData = await fetchNews();
@@ -572,7 +631,7 @@ async function renderLeaderboard() {
   }
 
   // Show loading indicator while fetching data
-  container.innerHTML = '<div class="leaderboard-loading"><div class="spinner"></div> Loading leaderboard…</div>';
+  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading leaderboard…</div>';
 
   // Ensure player scoring data is loaded for high scorer bonus
   if (topScorerName === null) {

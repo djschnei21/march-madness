@@ -296,6 +296,7 @@ main {
 .upcoming-game:last-child { border-bottom: none; }
 .upcoming-time { color: var(--text-secondary); font-size: 0.75rem; }
 .upcoming-tv { color: var(--accent-blue); font-size: 0.75rem; }
+.schedule-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
 
 /* Entry Card */
 .entry-teams table {
@@ -872,6 +873,7 @@ footer {
 }
 
 .btn-refresh:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+.btn-refresh.refreshing { animation: spin 0.8s linear infinite; opacity: 0.5; pointer-events: none; }
 
 .muted { color: var(--text-secondary); font-size: 0.85rem; }
 
@@ -1131,7 +1133,7 @@ footer {
 }
 
 /* Leaderboard */
-.leaderboard-loading {
+.loading-indicator {
   display: flex;
   align-items: center;
   gap: 10px;
