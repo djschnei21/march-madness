@@ -1,0 +1,3250 @@
+[
+  {
+    "id": "lee_p1",
+    "name": "lee p1",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 26
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 356
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 252
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 2641
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2509,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 248,
+    "highScorer": "Joseph Tugler",
+    "highScorerTeamId": 248,
+    "tiebreaker": 145
+  },
+  {
+    "id": "lee_p2",
+    "name": "lee p2",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 158
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2250
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 12,
+      "South": 356,
+      "Midwest": 258
+    },
+    "champion": 12,
+    "highScorer": "Dwayne Aristode",
+    "highScorerTeamId": 12,
+    "tiebreaker": 160
+  },
+  {
+    "id": "diane_p",
+    "name": "diane p",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 26
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 356
+      },
+      {
+        "slot": 6,
+        "teamId": 248
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2509,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Solo Ball",
+    "highScorerTeamId": 41,
+    "tiebreaker": 149
+  },
+  {
+    "id": "jay_p",
+    "name": "jay p",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 26
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 2377
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 142
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 2541
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 66
+    },
+    "champion": 12,
+    "highScorer": "Milan Momcilovic",
+    "highScorerTeamId": 66,
+    "tiebreaker": 141
+  },
+  {
+    "id": "mychelle_p",
+    "name": "mychelle p",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 248
+      },
+      {
+        "slot": 5,
+        "teamId": 12
+      },
+      {
+        "slot": 6,
+        "teamId": 142
+      },
+      {
+        "slot": 7,
+        "teamId": 2509
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 333
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2509,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 57,
+    "highScorer": "Thomas Haugh",
+    "highScorerTeamId": 57,
+    "tiebreaker": 138
+  },
+  {
+    "id": "bailey_p",
+    "name": "bailey p",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2305
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 158
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 66
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 134
+  },
+  {
+    "id": "mackenzie_e",
+    "name": "mackenzie e",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 238
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 252
+      },
+      {
+        "slot": 8,
+        "teamId": 333
+      },
+      {
+        "slot": 9,
+        "teamId": null
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 132
+  },
+  {
+    "id": "lynn_g",
+    "name": "lynn g",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": null
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": null,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 130,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": null
+  },
+  {
+    "id": "kevin_g",
+    "name": "kevin g",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 238
+      },
+      {
+        "slot": 4,
+        "teamId": 2670
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 252
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 2006
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": null
+  },
+  {
+    "id": "lauren_c",
+    "name": "lauren c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 238
+      },
+      {
+        "slot": 4,
+        "teamId": 2670
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 252
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 2633
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 144
+  },
+  {
+    "id": "heath_c",
+    "name": "heath c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 194
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 58
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 2670
+      },
+      {
+        "slot": 6,
+        "teamId": 248
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 252
+      },
+      {
+        "slot": 9,
+        "teamId": 139
+      },
+      {
+        "slot": 10,
+        "teamId": 2633
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Dwayne Aristode",
+    "highScorerTeamId": 12,
+    "tiebreaker": 152
+  },
+  {
+    "id": "nick_g",
+    "name": "nick g",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 2670
+      },
+      {
+        "slot": 4,
+        "teamId": 248
+      },
+      {
+        "slot": 5,
+        "teamId": 12
+      },
+      {
+        "slot": 6,
+        "teamId": 8
+      },
+      {
+        "slot": 7,
+        "teamId": 252
+      },
+      {
+        "slot": 8,
+        "teamId": 2641
+      },
+      {
+        "slot": 9,
+        "teamId": 2633
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 12,
+      "South": 248,
+      "Midwest": 66
+    },
+    "champion": 12,
+    "highScorer": "Kingston Flemings",
+    "highScorerTeamId": 248,
+    "tiebreaker": 153
+  },
+  {
+    "id": "michael_m1",
+    "name": "michael m1",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2628
+      },
+      {
+        "slot": 2,
+        "teamId": 58
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 153
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": null
+      },
+      {
+        "slot": 8,
+        "teamId": null
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 130,
+    "highScorer": "Yaxel Lendeborg",
+    "highScorerTeamId": 130,
+    "tiebreaker": 163
+  },
+  {
+    "id": "michael_m2",
+    "name": "michael m2",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2305
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 26
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 2670
+      },
+      {
+        "slot": 6,
+        "teamId": 248
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": 8
+      },
+      {
+        "slot": 9,
+        "teamId": 2509
+      },
+      {
+        "slot": 10,
+        "teamId": 2641
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Koa Peat",
+    "highScorerTeamId": 12,
+    "tiebreaker": 157
+  },
+  {
+    "id": "hannah_s",
+    "name": "hannah s",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 153
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 2633
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 126
+  },
+  {
+    "id": "dan_s",
+    "name": "dan s",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2628
+      },
+      {
+        "slot": 3,
+        "teamId": 58
+      },
+      {
+        "slot": 4,
+        "teamId": 2294
+      },
+      {
+        "slot": 5,
+        "teamId": 238
+      },
+      {
+        "slot": 6,
+        "teamId": 2670
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": 328
+      },
+      {
+        "slot": 9,
+        "teamId": 251
+      },
+      {
+        "slot": 10,
+        "teamId": 2006
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 147
+  },
+  {
+    "id": "bo_w",
+    "name": "bo w",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2509
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 140
+  },
+  {
+    "id": "mike_p",
+    "name": "mike p",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 97
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 356
+      },
+      {
+        "slot": 6,
+        "teamId": 248
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": 2250
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 2633
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 150
+  },
+  {
+    "id": "cathy_f",
+    "name": "cathy f",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2509
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 2509,
+      "South": 356,
+      "Midwest": 130
+    },
+    "champion": 2509,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 155
+  },
+  {
+    "id": "susan_c",
+    "name": "susan c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 12
+      },
+      {
+        "slot": 6,
+        "teamId": 8
+      },
+      {
+        "slot": 7,
+        "teamId": 2509
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Brayden Burries",
+    "highScorerTeamId": 12,
+    "tiebreaker": 157
+  },
+  {
+    "id": "julie_c",
+    "name": "julie c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 97
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 145
+  },
+  {
+    "id": "susan_l",
+    "name": "susan l",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2305
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 356
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 130,
+    "highScorer": "Labaron Philon Jr.",
+    "highScorerTeamId": 333,
+    "tiebreaker": 142
+  },
+  {
+    "id": "ron_l",
+    "name": "ron l",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 26
+      },
+      {
+        "slot": 5,
+        "teamId": 57
+      },
+      {
+        "slot": 6,
+        "teamId": 356
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": null
+      },
+      {
+        "slot": 9,
+        "teamId": 2509
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 66
+    },
+    "champion": 57,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 165
+  },
+  {
+    "id": "pete_m",
+    "name": "pete m",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2305
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 2294
+      },
+      {
+        "slot": 4,
+        "teamId": 158
+      },
+      {
+        "slot": 5,
+        "teamId": 153
+      },
+      {
+        "slot": 6,
+        "teamId": 328
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 139
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 2250,
+      "South": null,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 135
+  },
+  {
+    "id": "repete_m",
+    "name": "repete m",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2460
+      },
+      {
+        "slot": 3,
+        "teamId": 26
+      },
+      {
+        "slot": 4,
+        "teamId": 2377
+      },
+      {
+        "slot": 5,
+        "teamId": 2608
+      },
+      {
+        "slot": 6,
+        "teamId": null
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 2006
+      },
+      {
+        "slot": 10,
+        "teamId": null
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 12,
+      "South": 57,
+      "Midwest": 258
+    },
+    "champion": 2250,
+    "highScorer": "Graham Ike",
+    "highScorerTeamId": 2250,
+    "tiebreaker": 132
+  },
+  {
+    "id": "bob_l",
+    "name": "bob l",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 26
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 8
+      },
+      {
+        "slot": 6,
+        "teamId": 2250
+      },
+      {
+        "slot": 7,
+        "teamId": 2509
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 2633
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 8,
+      "South": 356,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 182
+  },
+  {
+    "id": "jeff_c",
+    "name": "jeff c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 8,
+      "South": 57,
+      "Midwest": 66
+    },
+    "champion": 130,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 155
+  },
+  {
+    "id": "nancy_c",
+    "name": "nancy c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2272
+      },
+      {
+        "slot": 8,
+        "teamId": 2250
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2250,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 166
+  },
+  {
+    "id": "katelyn_l",
+    "name": "katelyn l",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2628
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 2294
+      },
+      {
+        "slot": 6,
+        "teamId": 248
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": 2250
+      },
+      {
+        "slot": 9,
+        "teamId": 2633
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": null,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Brayden Burries",
+    "highScorerTeamId": 12,
+    "tiebreaker": 148
+  },
+  {
+    "id": "shephard_l",
+    "name": "shephard l",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 2449
+      },
+      {
+        "slot": 3,
+        "teamId": 238
+      },
+      {
+        "slot": 4,
+        "teamId": 2608
+      },
+      {
+        "slot": 5,
+        "teamId": 12
+      },
+      {
+        "slot": 6,
+        "teamId": 222
+      },
+      {
+        "slot": 7,
+        "teamId": 2272
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": null
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 2509,
+      "South": null,
+      "Midwest": 2633
+    },
+    "champion": 41,
+    "highScorer": "Solo Ball",
+    "highScorerTeamId": 41,
+    "tiebreaker": 142
+  },
+  {
+    "id": "cayla_c",
+    "name": "cayla c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2628
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 238
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 12
+      },
+      {
+        "slot": 6,
+        "teamId": 8
+      },
+      {
+        "slot": 7,
+        "teamId": 2509
+      },
+      {
+        "slot": 8,
+        "teamId": 2641
+      },
+      {
+        "slot": 9,
+        "teamId": 2633
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 2509,
+      "South": 248,
+      "Midwest": 66
+    },
+    "champion": 66,
+    "highScorer": "Milan Momcilovic",
+    "highScorerTeamId": 66,
+    "tiebreaker": 154
+  },
+  {
+    "id": "alex_c",
+    "name": "alex c",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 58
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 356
+      },
+      {
+        "slot": 6,
+        "teamId": 8
+      },
+      {
+        "slot": 7,
+        "teamId": 251
+      },
+      {
+        "slot": 8,
+        "teamId": 2006
+      },
+      {
+        "slot": 9,
+        "teamId": 2633
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 12,
+      "South": 356,
+      "Midwest": 66
+    },
+    "champion": 41,
+    "highScorer": "Alex Karaban",
+    "highScorerTeamId": 41,
+    "tiebreaker": 152
+  },
+  {
+    "id": "geoffry_r",
+    "name": "geoffry r",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 58
+      },
+      {
+        "slot": 3,
+        "teamId": 26
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2509
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 2641
+      },
+      {
+        "slot": 10,
+        "teamId": 96
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2509,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 248,
+    "highScorer": "Brayden Burries",
+    "highScorerTeamId": 12,
+    "tiebreaker": 149
+  },
+  {
+    "id": "gene_n",
+    "name": "gene n",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2250
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 152
+  },
+  {
+    "id": "phil_l",
+    "name": "phil l",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2460
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 2377
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": null
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 89
+  },
+  {
+    "id": "steve_b",
+    "name": "steve b",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 57
+      },
+      {
+        "slot": 3,
+        "teamId": 356
+      },
+      {
+        "slot": 4,
+        "teamId": 2250
+      },
+      {
+        "slot": 5,
+        "teamId": null
+      },
+      {
+        "slot": 6,
+        "teamId": 2509
+      },
+      {
+        "slot": 7,
+        "teamId": 130
+      },
+      {
+        "slot": 8,
+        "teamId": 333
+      },
+      {
+        "slot": 9,
+        "teamId": 2633
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2509,
+      "South": 57,
+      "Midwest": 66
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 97
+  },
+  {
+    "id": "tj_r",
+    "name": "tj r",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 41
+      },
+      {
+        "slot": 5,
+        "teamId": 57
+      },
+      {
+        "slot": 6,
+        "teamId": 356
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": 8
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 356,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 143
+  },
+  {
+    "id": "jason_p",
+    "name": "jason p",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 2608
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 252
+      },
+      {
+        "slot": 8,
+        "teamId": 2006
+      },
+      {
+        "slot": 9,
+        "teamId": 2633
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 2599,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Brayden Burries",
+    "highScorerTeamId": 12,
+    "tiebreaker": 156
+  },
+  {
+    "id": "fathy_k",
+    "name": "fathy k",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 248
+      },
+      {
+        "slot": 5,
+        "teamId": 12
+      },
+      {
+        "slot": 6,
+        "teamId": 8
+      },
+      {
+        "slot": 7,
+        "teamId": 130
+      },
+      {
+        "slot": 8,
+        "teamId": 2641
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 12,
+      "South": 57,
+      "Midwest": 258
+    },
+    "champion": 12,
+    "highScorer": "Dwayne Aristode",
+    "highScorerTeamId": 12,
+    "tiebreaker": 127
+  },
+  {
+    "id": "ken_k",
+    "name": "ken k",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 228
+      },
+      {
+        "slot": 3,
+        "teamId": 158
+      },
+      {
+        "slot": 4,
+        "teamId": 153
+      },
+      {
+        "slot": 5,
+        "teamId": 245
+      },
+      {
+        "slot": 6,
+        "teamId": 328
+      },
+      {
+        "slot": 7,
+        "teamId": 252
+      },
+      {
+        "slot": 8,
+        "teamId": 142
+      },
+      {
+        "slot": 9,
+        "teamId": 96
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 66
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 147
+  },
+  {
+    "id": "bryn_d",
+    "name": "bryn d",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 158
+      },
+      {
+        "slot": 5,
+        "teamId": 356
+      },
+      {
+        "slot": 6,
+        "teamId": null
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": null
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2250,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 130,
+    "highScorer": "Yaxel Lendeborg",
+    "highScorerTeamId": 130,
+    "tiebreaker": 152
+  },
+  {
+    "id": "paul_d1",
+    "name": "paul d1",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 178
+  },
+  {
+    "id": "paul_d2",
+    "name": "paul d2",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 26
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": null
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 66
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 146
+  },
+  {
+    "id": "paul_d3",
+    "name": "paul d3",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2305
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 238
+      },
+      {
+        "slot": 6,
+        "teamId": 248
+      },
+      {
+        "slot": 7,
+        "teamId": null
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2509,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 130,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 142
+  },
+  {
+    "id": "emily_h",
+    "name": "emily h",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 26
+      },
+      {
+        "slot": 5,
+        "teamId": 2653
+      },
+      {
+        "slot": 6,
+        "teamId": 356
+      },
+      {
+        "slot": 7,
+        "teamId": 252
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 333
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 252,
+    "highScorer": "AJ Dybantsa",
+    "highScorerTeamId": 252,
+    "tiebreaker": null
+  },
+  {
+    "id": "leon_g1",
+    "name": "leon g1",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 2006
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 12,
+      "South": 248,
+      "Midwest": 66
+    },
+    "champion": 12,
+    "highScorer": "Kingston Flemings",
+    "highScorerTeamId": 248,
+    "tiebreaker": 145
+  },
+  {
+    "id": "leon_g2",
+    "name": "leon g2",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 130
+      },
+      {
+        "slot": 8,
+        "teamId": 2006
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 96
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 248,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 145
+  },
+  {
+    "id": "chris_w",
+    "name": "chris w",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 66
+    },
+    "champion": 150,
+    "highScorer": "Dwayne Aristode",
+    "highScorerTeamId": 12,
+    "tiebreaker": 133
+  },
+  {
+    "id": "john_c1",
+    "name": "john c1",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 2116
+      },
+      {
+        "slot": 4,
+        "teamId": 238
+      },
+      {
+        "slot": 5,
+        "teamId": 2670
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 2006
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 143
+  },
+  {
+    "id": "john_c2",
+    "name": "john c2",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 58
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": null
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 258
+      },
+      {
+        "slot": 10,
+        "teamId": 96
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 149
+  },
+  {
+    "id": "dave_b1",
+    "name": "dave b1",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 238
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 160
+  },
+  {
+    "id": "dave_b2",
+    "name": "dave b2",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 26
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 8,
+      "South": 356,
+      "Midwest": 130
+    },
+    "champion": 130,
+    "highScorer": "Dwayne Aristode",
+    "highScorerTeamId": 12,
+    "tiebreaker": 160
+  },
+  {
+    "id": "dave_b3",
+    "name": "dave b3",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 58
+      },
+      {
+        "slot": 3,
+        "teamId": 26
+      },
+      {
+        "slot": 4,
+        "teamId": 41
+      },
+      {
+        "slot": 5,
+        "teamId": 57
+      },
+      {
+        "slot": 6,
+        "teamId": 238
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": 130
+      },
+      {
+        "slot": 9,
+        "teamId": 2641
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 41,
+      "West": 2509,
+      "South": 57,
+      "Midwest": 66
+    },
+    "champion": 248,
+    "highScorer": "Kingston Flemings",
+    "highScorerTeamId": 248,
+    "tiebreaker": 160
+  },
+  {
+    "id": "dave_b4",
+    "name": "dave b4",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2305
+      },
+      {
+        "slot": 3,
+        "teamId": 127
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 238
+      },
+      {
+        "slot": 6,
+        "teamId": 356
+      },
+      {
+        "slot": 7,
+        "teamId": 12
+      },
+      {
+        "slot": 8,
+        "teamId": null
+      },
+      {
+        "slot": 9,
+        "teamId": 8
+      },
+      {
+        "slot": 10,
+        "teamId": 333
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 238,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Yaxel Lendeborg",
+    "highScorerTeamId": 130,
+    "tiebreaker": 160
+  },
+  {
+    "id": "blake_b1",
+    "name": "blake b1",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 41
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 356
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 252
+      },
+      {
+        "slot": 9,
+        "teamId": 2509
+      },
+      {
+        "slot": 10,
+        "teamId": 2641
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 248,
+    "highScorer": "Brayden Burries",
+    "highScorerTeamId": 12,
+    "tiebreaker": 143
+  },
+  {
+    "id": "blake_b2",
+    "name": "blake b2",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2305
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 238
+      },
+      {
+        "slot": 4,
+        "teamId": 248
+      },
+      {
+        "slot": 5,
+        "teamId": 12
+      },
+      {
+        "slot": 6,
+        "teamId": null
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 258
+      }
+    ],
+    "finalFour": {
+      "East": 127,
+      "West": 12,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 12,
+    "highScorer": "Jackson Francois",
+    "highScorerTeamId": 12,
+    "tiebreaker": 160
+  },
+  {
+    "id": "blake_b3",
+    "name": "blake b3",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 150
+      },
+      {
+        "slot": 2,
+        "teamId": 2599
+      },
+      {
+        "slot": 3,
+        "teamId": 41
+      },
+      {
+        "slot": 4,
+        "teamId": 57
+      },
+      {
+        "slot": 5,
+        "teamId": 248
+      },
+      {
+        "slot": 6,
+        "teamId": 12
+      },
+      {
+        "slot": 7,
+        "teamId": 8
+      },
+      {
+        "slot": 8,
+        "teamId": 252
+      },
+      {
+        "slot": 9,
+        "teamId": 2250
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 12,
+      "South": 57,
+      "Midwest": 130
+    },
+    "champion": 150,
+    "highScorer": "Cameron Boozer",
+    "highScorerTeamId": 150,
+    "tiebreaker": 160
+  },
+  {
+    "id": "blake_b4",
+    "name": "blake b4",
+    "teams": [
+      {
+        "slot": 1,
+        "teamId": 2599
+      },
+      {
+        "slot": 2,
+        "teamId": 127
+      },
+      {
+        "slot": 3,
+        "teamId": 57
+      },
+      {
+        "slot": 4,
+        "teamId": 248
+      },
+      {
+        "slot": 5,
+        "teamId": 8
+      },
+      {
+        "slot": 6,
+        "teamId": 252
+      },
+      {
+        "slot": 7,
+        "teamId": 2250
+      },
+      {
+        "slot": 8,
+        "teamId": 2509
+      },
+      {
+        "slot": 9,
+        "teamId": 130
+      },
+      {
+        "slot": 10,
+        "teamId": 66
+      }
+    ],
+    "finalFour": {
+      "East": 150,
+      "West": 2509,
+      "South": 248,
+      "Midwest": 130
+    },
+    "champion": 130,
+    "highScorer": "AJ Dybantsa",
+    "highScorerTeamId": 252,
+    "tiebreaker": 155
+  }
+]

@@ -1,6 +1,7 @@
 // Main application - init, tab routing, refresh loop, dashboard rendering
 import { loadTeams, getTeamById, teamLogoUrl } from './teams.js';
-import { loadEntry, getEntry, getPickedTeamIds, hasAnyPicks, onChange, renderEntryCard, savePlayerCache, isViewOnly, getOpponents, switchToMyEntry, switchToOpponent, getActiveView, getActiveViewName } from './entry.js';
+import { loadParticipants, getAllParticipants, getSelectedParticipant, selectParticipant, getEntry, getPickedTeamIds, hasAnyPicks } from './participants.js';
+import { renderEntryCard } from './entry.js';
 import { refreshScores, isAnyGameLive, getLastFetchTime, getAllGames, getGamesForTeam, getTeamResult, fetchPlayerScoring, fetchNews } from './espn.js';
 import { calculateScoring } from './scoring.js';
 import { renderBracket } from './bracket.js';
@@ -28,52 +29,29 @@ function displayStatus(status) {
 // ---- Init ----
 async function init() {
   await loadTeams();
-  loadEntry();
+  await loadParticipants();
 
   setupTabs();
   setupRefreshButton();
   setupEntrySwitcher();
 
-  // Render entry card
-  renderEntryCard();
   renderEntrySwitcher();
 
-  // Wire entry changes to re-render
-  onChange(async () => {
-    if (hasAnyPicks()) {
-      await refreshScores();
-      renderDashboard();
-      if (activeTab === 'bracket') renderBracket(getActiveRegion());
-      startRefreshLoop();
-      updateLastRefresh();
-    } else {
+  document.getElementById('team-cards').innerHTML =
+    '<div class="loading-indicator"><div class="spinner"></div> Loading scores...</div>';
+  await refreshScores();
+  renderDashboard();
+  renderBracket();
+  startRefreshLoop();
+  updateLastRefresh();
+
+  // Eager-load player scoring for high scorer bonus (non-blocking)
+  fetchPlayerScoring().then(players => {
+    if (players?.length > 0) {
+      topScorerName = players[0].name;
       renderDashboard();
     }
-    // Entry card manages its own rendering — don't rebuild it here
-    // (rebuilding destroys focused inputs mid-keystroke)
   });
-
-  // Only fetch data and start refresh loop if picks exist
-  if (hasAnyPicks()) {
-    document.getElementById('team-cards').innerHTML =
-      '<div class="loading-indicator"><div class="spinner"></div> Loading scores…</div>';
-    await refreshScores();
-    renderDashboard();
-    renderBracket();
-    startRefreshLoop();
-    updateLastRefresh();
-
-    // Eager-load player scoring for high scorer bonus (non-blocking)
-    fetchPlayerScoring().then(players => {
-      if (players?.length > 0) {
-        topScorerName = players[0].name;
-        renderDashboard();
-      }
-    });
-  } else {
-    renderDashboard();
-    renderBracket();
-  }
 }
 
 // ---- Tab Navigation ----
@@ -160,8 +138,6 @@ function updateLastRefresh() {
 }
 
 // ---- Helpers ----
-// Find championship game by date (Apr 6) to avoid false positives from ESPN notes
-// that include "Championship" in all rounds (e.g. "NCAA Championship - First Round")
 function findChampionshipGame() {
   return getAllGames().find(g => {
     const date = g.date?.slice(0, 10)?.replace(/-/g, '') || '';
@@ -186,20 +162,20 @@ function scoringOptions() {
   return { playerLeader: topScorerName, tournamentComplete: isTournamentComplete() };
 }
 
+function getViewName() {
+  const p = getSelectedParticipant();
+  return p ? p.name : 'Unknown';
+}
+
 // ---- Dashboard Rendering ----
 function renderDashboard() {
-  if (!hasAnyPicks()) {
-    renderEmptyState();
-    return;
-  }
-
   const scoring = calculateScoring(null, scoringOptions());
   if (!scoring) return;
 
   // Update header scores
-  const viewName = getActiveViewName();
+  const viewName = getViewName();
   const totalLabel = document.querySelector('.total-points .label');
-  if (totalLabel) totalLabel.textContent = viewName === 'My Entry' ? 'Total Points' : viewName;
+  if (totalLabel) totalLabel.textContent = viewName;
   document.getElementById('total-points').textContent = scoring.partITotal;
   document.getElementById('max-points').textContent = scoring.maxPossible;
 
@@ -216,30 +192,6 @@ function renderDashboard() {
   renderUpcomingGames(scoring);
 
   // Headlines (async, non-blocking)
-  renderHeadlines();
-}
-
-function renderEmptyState() {
-  document.getElementById('total-points').textContent = '-';
-  document.getElementById('max-points').textContent = '-';
-
-  document.getElementById('team-cards').innerHTML = `
-    <div class="empty-state" style="grid-column: 1 / -1;">
-      <div class="empty-state-icon">🏀</div>
-      <h2>Welcome to the Pool Tracker</h2>
-      <p>Get started by entering your picks on the Entry Card.</p>
-      <button class="btn" id="go-to-entry">Set Up Your Entry Card</button>
-    </div>
-  `;
-
-  document.querySelector('#bonus-card .bonus-items').innerHTML = '';
-  document.querySelector('#ff-card .ff-items').innerHTML = '';
-  document.querySelector('#upcoming-card .upcoming-list').innerHTML = '';
-
-  document.getElementById('go-to-entry')?.addEventListener('click', () => {
-    document.querySelector('.tab[data-tab="entry"]').click();
-  });
-
   renderHeadlines();
 }
 
@@ -381,7 +333,7 @@ function renderFinalFourCard(ffResult) {
 function renderUpcomingGames(scoring) {
   const container = document.querySelector('#upcoming-card .upcoming-list');
   const heading = document.querySelector('#upcoming-card h3');
-  if (heading) heading.textContent = getActiveViewName() === 'My Entry' ? 'Your Schedule' : getActiveViewName().replace(/'s Entry$/, "'s Schedule");
+  if (heading) heading.textContent = getViewName() + "'s Schedule";
 
   // Collect Part I team IDs
   const partITeamIds = new Set(scoring.teamResults.map(tr => tr.team.id));
@@ -441,16 +393,12 @@ function renderUpcomingGames(scoring) {
   upcoming.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
   if (upcoming.length === 0) {
-    container.innerHTML = '<p class="muted">No upcoming games for your teams</p>';
+    container.innerHTML = '<p class="muted">No upcoming games</p>';
     return;
   }
 
   container.innerHTML = upcoming.map(g => {
     const time = new Date(g.startTime);
-    const timeStr = g.live
-      ? `<span style="color:var(--accent-amber)">LIVE ${g.clock} ${g.period === 1 ? '1st Half' : g.period === 2 ? '2nd Half' : g.period ? `OT${g.period > 3 ? g.period - 2 : ''}` : ''}</span>`
-      : time.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ' ' +
-        time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
     // Determine tag color based on first tag keyword
     let tagHtml = '';
@@ -460,6 +408,22 @@ function renderUpcomingGames(scoring) {
       else if (g.tag.includes('High Scorer')) color = 'var(--accent-blue)';
       tagHtml = ` <span class="schedule-tag" style="color:${color}">${g.tag}</span>`;
     }
+
+    if (g.live) {
+      const periodStr = g.period === 1 ? '1st Half' : g.period === 2 ? '2nd Half' : g.period ? `OT${g.period > 3 ? g.period - 2 : ''}` : '';
+      return `<div class="upcoming-game live">
+        <div>
+          <strong>${g.team.name}</strong>${tagHtml} vs ${g.opponentName}
+          <div class="live-score" style="margin-top:4px">
+            <strong>${g.teamScore} - ${g.opponentScore}</strong>
+            &middot; ${g.clock} ${periodStr} ${g.broadcast ? `&middot; ${g.broadcast}` : ''}
+          </div>
+        </div>
+      </div>`;
+    }
+
+    const timeStr = time.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ' ' +
+      time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
     return `<div class="upcoming-game">
       <div>
@@ -474,7 +438,7 @@ function renderUpcomingGames(scoring) {
 // ---- High Scorer Tab ----
 async function renderHighScorer() {
   const container = document.getElementById('player-leaderboard');
-  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading player stats…</div>';
+  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading player stats...</div>';
 
   const entry = getEntry();
   const players = await fetchPlayerScoring();
@@ -487,9 +451,6 @@ async function renderHighScorer() {
   // Track tournament scoring leader for high scorer bonus verification
   topScorerName = players[0]?.name || null;
 
-  // Cache player names for high scorer autocomplete on entry card
-  savePlayerCache(players);
-
   const highScorerName = entry?.highScorer?.toLowerCase() || '';
 
   let html = `<table class="player-table">
@@ -498,14 +459,13 @@ async function renderHighScorer() {
     </tr></thead><tbody>`;
 
   players.slice(0, 50).forEach((p, i) => {
-    const isHighlight = p.name.toLowerCase().includes(highScorerName) ||
-      (entry?.highScorerTeamId && p.teamId === entry.highScorerTeamId && p.name.toLowerCase().includes(highScorerName.split(' ').pop()));
+    const isHighlight = highScorerName && p.name.toLowerCase() === highScorerName;
     const cls = isHighlight ? 'highlight' : '';
     const ppg = p.games > 0 ? (p.totalPoints / p.games).toFixed(1) : '0.0';
 
     html += `<tr class="${cls}">
       <td>${i + 1}</td>
-      <td>${p.name} ${isHighlight ? '⭐' : ''}</td>
+      <td>${p.name} ${isHighlight ? '***' : ''}</td>
       <td>${p.teamName}</td>
       <td>${p.games}</td>
       <td><strong>${p.totalPoints}</strong></td>
@@ -522,7 +482,7 @@ async function renderHeadlines() {
   const container = document.querySelector('#headlines-card .headlines-list');
   if (!container) return;
 
-  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading headlines…</div>';
+  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading headlines...</div>';
 
   const entry = getEntry();
   const newsData = await fetchNews();
@@ -559,25 +519,16 @@ async function renderHeadlines() {
 
   // Update card heading based on active view
   const heading = document.querySelector('#headlines-card h3');
-  if (heading) heading.textContent = getActiveViewName() === 'My Entry' ? 'Your Headlines' : getActiveViewName().replace(/'s Entry$/, "'s Headlines");
+  if (heading) heading.textContent = getViewName() + "'s Headlines";
 
   container.innerHTML = articles.map(article => {
-    const matchedTeams = [];
-    const text = (article.headline + ' ' + (article.description || '')).toLowerCase();
-    for (const t of pickedTeams) {
-      if (text.includes(t.name.toLowerCase())) matchedTeams.push(t.name);
-    }
-    const teamTags = matchedTeams.length > 0
-      ? ' ' + matchedTeams.map(n => `<span class="news-team-tag">${n}</span>`).join(' ')
-      : '';
-
     return `<div class="headline-item">
-      <a href="${article.links?.web?.href || '#'}" target="_blank">${article.headline}</a>${teamTags}
+      <a href="${article.links?.web?.href || '#'}" target="_blank">${article.headline}</a>
     </div>`;
   }).join('');
 
   if (!isFiltered && pickedTeams.length > 0) {
-    container.innerHTML += '<p class="muted" style="margin-top:6px;font-size:0.75rem">No news specific to your teams — showing general headlines</p>';
+    container.innerHTML += '<p class="muted" style="margin-top:6px;font-size:0.75rem">No news specific to picked teams - showing general headlines</p>';
   }
 }
 
@@ -585,65 +536,33 @@ async function renderHeadlines() {
 function setupEntrySwitcher() {
   const sel = document.getElementById('entry-switcher');
   sel.addEventListener('change', (e) => {
-    const val = e.target.value;
-    if (val === '__manage__') {
-      // Navigate to entry card's Share & Opponents section
-      document.querySelector('.tab[data-tab="entry"]').click();
-      sel.value = getActiveView().type === 'mine' ? 'mine' : getActiveView().id;
-      // Scroll to the share section
-      setTimeout(() => {
-        document.getElementById('entry-management')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-      return;
-    }
-    if (val === 'mine') {
-      switchToMyEntry();
-    } else {
-      switchToOpponent(val);
-    }
+    selectParticipant(e.target.value);
     renderDashboard();
     if (activeTab === 'bracket') renderBracket(getActiveRegion());
-    if (activeTab === 'leaderboard') renderLeaderboard();
-  });
-
-  window.addEventListener('opponents-changed', () => {
-    renderEntrySwitcher();
+    if (activeTab === 'entry') renderEntryCard();
     if (activeTab === 'leaderboard') renderLeaderboard();
   });
 }
 
 function renderEntrySwitcher() {
   const sel = document.getElementById('entry-switcher');
-  const opponents = getOpponents();
-  const active = getActiveView();
+  const participants = getAllParticipants();
+  const selected = getSelectedParticipant();
 
-  let html = `<option value="mine" ${active.type === 'mine' ? 'selected' : ''}>My Entry</option>`;
+  // Sort alphabetically by name
+  const sorted = [...participants].sort((a, b) => a.name.localeCompare(b.name));
 
-  if (opponents.length > 0) {
-    html += `<optgroup label="Opponents">`;
-    html += opponents.map(o =>
-      `<option value="${o.id}" ${active.type === 'opponent' && active.id === o.id ? 'selected' : ''}>${o.name}</option>`
-    ).join('');
-    html += `</optgroup>`;
-  }
-
-  html += `<option value="__manage__">Manage Entries...</option>`;
-
-  sel.innerHTML = html;
+  sel.innerHTML = sorted.map(p =>
+    `<option value="${p.id}" ${p.id === selected?.id ? 'selected' : ''}>${p.name}</option>`
+  ).join('');
 }
 
 // ---- Leaderboard ----
 async function renderLeaderboard() {
   const container = document.getElementById('leaderboard-content');
-  const opponents = getOpponents();
 
-  if (opponents.length === 0) {
-    container.innerHTML = '<p class="muted">Save opponent entries to see the leaderboard.</p>';
-    return;
-  }
-
-  // Show loading indicator while fetching data
-  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading leaderboard…</div>';
+  // Show loading indicator while computing
+  container.innerHTML = '<div class="loading-indicator"><div class="spinner"></div> Loading leaderboard...</div>';
 
   // Ensure player scoring data is loaded for high scorer bonus
   if (topScorerName === null) {
@@ -652,45 +571,26 @@ async function renderLeaderboard() {
   }
 
   const opts = scoringOptions();
-
-  // Score own entry
-  const STORAGE_KEY = 'mm2026_entry';
-  let myEntry;
-  try { myEntry = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch { myEntry = null; }
+  const participants = getAllParticipants();
+  const selected = getSelectedParticipant();
 
   const rows = [];
-
-  if (myEntry) {
-    const scoring = calculateScoring(myEntry, opts);
+  for (const p of participants) {
+    const scoring = calculateScoring(p, opts);
     if (scoring) {
       rows.push({
-        name: 'My Entry',
+        id: p.id,
+        name: p.name,
         points: scoring.partITotal,
         maxPossible: scoring.maxPossible,
         champion: scoring.championResult,
         finalFour: scoring.finalFourResult,
-        tiebreaker: myEntry.tiebreaker || 0,
-        isMine: true,
+        tiebreaker: p.tiebreaker || 0,
       });
     }
   }
 
-  for (const opp of opponents) {
-    const scoring = calculateScoring(opp.entry, opts);
-    if (scoring) {
-      rows.push({
-        name: opp.name,
-        points: scoring.partITotal,
-        maxPossible: scoring.maxPossible,
-        champion: scoring.championResult,
-        finalFour: scoring.finalFourResult,
-        tiebreaker: opp.entry.tiebreaker || 0,
-        isMine: false,
-      });
-    }
-  }
-
-  // Check for jackpot winners (Part II — all 4 Final Four picks correct)
+  // Check for jackpot winners (Part II - all 4 Final Four picks correct)
   const jackpotWinners = rows.filter(r => r.finalFour.sweepWin);
   const isJackpot = jackpotWinners.length > 0;
 
@@ -727,7 +627,7 @@ async function renderLeaderboard() {
   }
 
   // Tiebreaker column header
-  const tbHeader = actualTotal !== null ? `Tiebreaker (Actual: ${actualTotal})` : 'Tiebreaker';
+  const tbHeader = actualTotal !== null ? `TB (Actual: ${actualTotal})` : 'TB';
 
   html += `<table class="leaderboard-table">
     <thead><tr>
@@ -738,18 +638,18 @@ async function renderLeaderboard() {
     const champName = r.champion.pick?.name || 'None';
     const champStatus = r.champion.status;
     const ffStatus = r.finalFour.sweepWin ? 'WON' : r.finalFour.possible ? 'Alive' : 'Dead';
-    const cls = r.isMine ? 'highlight' : '';
+    const cls = r.id === selected?.id ? 'highlight' : '';
     const ptsClass = isJackpot ? 'voided' : '';
 
     // Tiebreaker display
     let tbDisplay = r.tiebreaker > 0 ? `${r.tiebreaker}` : '-';
     if (actualTotal !== null && r.tiebreaker > 0) {
-      tbDisplay += ` <span class="muted">(off by ${Math.abs(r.tiebreaker - actualTotal)})</span>`;
+      tbDisplay += ` <span class="muted">(${Math.abs(r.tiebreaker - actualTotal)})</span>`;
     }
 
     html += `<tr class="${cls}">
       <td>${i + 1}</td>
-      <td>${r.name}${r.isMine ? ' (you)' : ''}</td>
+      <td>${r.name}</td>
       <td class="${ptsClass}"><strong>${r.points}</strong></td>
       <td class="${ptsClass}">${r.maxPossible}</td>
       <td>${tbDisplay}</td>

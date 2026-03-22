@@ -49,10 +49,13 @@ function todayStr() {
   return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
 }
 
-// Get dates up to and including today
+// Get dates up to and including the next tournament date after today
 function getDatesToFetch() {
   const today = todayStr();
-  return TOURNAMENT_DATES.filter(d => d <= today);
+  const pastAndToday = TOURNAMENT_DATES.filter(d => d <= today);
+  const nextDate = TOURNAMENT_DATES.find(d => d > today);
+  if (nextDate) pastAndToday.push(nextDate);
+  return pastAndToday;
 }
 
 // Fetch scoreboard for a given date (groups=100 = NCAA tournament)

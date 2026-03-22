@@ -1,6 +1,6 @@
 // Bracket rendering
 import { getTeamsByRegion, getTeamById, getRegions, teamLogoUrl } from './teams.js';
-import { getPickedTeamIds, getEntry } from './entry.js';
+import { getPickedTeamIds, getEntry } from './participants.js';
 import { getGamesForTeam, getTeamResult, getAllGames } from './espn.js';
 
 // Standard bracket matchups by seed (1v16, 8v9, 5v12, 4v13, 6v11, 3v14, 7v10, 2v15)
@@ -20,10 +20,8 @@ export function renderBracket(activeRegion = 'all') {
   let html = `<div class="bracket-legend">
     <span class="bracket-legend-item"><span class="legend-swatch picked"></span> Your Pick</span>
     <span class="bracket-legend-item"><span class="legend-swatch ff-pick"></span> Final Four Pick</span>
-    <span class="bracket-legend-item"><span class="legend-swatch won"></span> Won</span>
-    <span class="bracket-legend-item"><span class="legend-swatch playing"></span> Playing</span>
-    <span class="bracket-legend-item"><span class="legend-swatch lost"></span> Eliminated</span>
-    <span class="bracket-legend-item"><span class="legend-swatch not-played"></span> Not Yet Played</span>
+    <span class="bracket-legend-item"><span class="legend-swatch picked-ff"></span> Both</span>
+    <span class="bracket-legend-item"><span class="legend-swatch pick-lost"></span> Eliminated</span>
   </div>`;
 
   // Single region view
@@ -77,18 +75,19 @@ function isTeamEliminated(teamId) {
   });
 }
 
-function teamClass(teamId, pickedIds, ffPickIds, roundLabel) {
-  const roundStatus = getTeamRoundStatus(teamId, roundLabel);
+function teamClass(teamId, pickedIds, ffPickIds) {
   const classes = ['bracket-team'];
-  // FF pick (purple) takes precedence over Part I pick (blue)
-  if (ffPickIds.has(teamId)) classes.push('ff-pick');
-  else if (pickedIds.has(teamId)) classes.push('picked');
-  if (typeof roundStatus === 'object' && roundStatus?.status === 'playing') {
-    classes.push('playing');
-  } else if (roundStatus === 'won') {
-    classes.push('won');
-  } else if (roundStatus === 'lost') {
-    classes.push('lost');
+  const eliminated = isTeamEliminated(teamId);
+  const isPicked = pickedIds.has(teamId);
+  const isFF = ffPickIds.has(teamId);
+  if (eliminated) {
+    if (isPicked || isFF) classes.push('pick-lost');
+  } else if (isPicked && isFF) {
+    classes.push('picked-ff');
+  } else if (isFF) {
+    classes.push('ff-pick');
+  } else if (isPicked) {
+    classes.push('picked');
   }
   return classes.join(' ');
 }
@@ -196,7 +195,7 @@ function renderBracketTeam(team, pickedIds, ffPickIds, roundLabel) {
     return `<div class="bracket-team"><span class="bracket-seed">-</span><span>TBD</span></div>`;
   }
 
-  const cls = teamClass(team.id, pickedIds, ffPickIds, roundLabel);
+  const cls = teamClass(team.id, pickedIds, ffPickIds);
   const roundStatus = getTeamRoundStatus(team.id, roundLabel);
   let scoreHtml = '';
   if (typeof roundStatus === 'object' && roundStatus?.score) {

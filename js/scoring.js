@@ -1,6 +1,6 @@
 // Scoring engine: (seed+4)*wins, bonuses, Part II
 import { getTeamById } from './teams.js';
-import { getEntry, getPickedTeamIds } from './entry.js';
+import { getEntry, getPickedTeamIds } from './participants.js';
 import { getAllGames, getGamesForTeam, getTeamResult, getScoreGeneration } from './espn.js';
 
 const ROUNDS = ['R64', 'R32', 'S16', 'E8', 'FF', 'Final'];
